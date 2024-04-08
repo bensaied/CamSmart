@@ -203,6 +203,7 @@ const HomePage = (props: Props) => {
       startRecording(false);
     }
   }
+  // Start Recording Function
   function startRecording(doBeep: boolean) {
     if (webcamRef.current && mediaRecorderRef.current?.state !== "recording") {
       mediaRecorderRef.current?.start();
@@ -214,6 +215,18 @@ const HomePage = (props: Props) => {
           mediaRecorderRef.current.stop();
         }
       }, 30000);
+    }
+  }
+  // Auto Recording Function
+  function toggleAutoRecord() {
+    if (autoRecordEnabled) {
+      setAutoRecordEnabled(false);
+      toast("Autorecord disabled");
+      // show toast to user to notify the change
+    } else {
+      setAutoRecordEnabled(true);
+      toast("Autorecord enabled");
+      // show toast
     }
   }
 };
