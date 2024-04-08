@@ -26,7 +26,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import SocialMediaLinks from "@/components/social-links";
-
+import { drawOnCanvas } from "@/utils/draw";
 import { beep } from "@/utils/audio";
 
 import * as cocossd from "@tensorflow-models/coco-ssd";
@@ -99,7 +99,48 @@ const HomePage = (props: Props) => {
     });
     setModel(loadedModel);
   }
+  // Disable loading component when the model is loaded
+  useEffect(() => {
+    if (model) {
+      setLoading(false);
+    }
+  }, [model]);
 
+  // Run Prediction : Detection Process
+  async function runPrediction() {
+    if (
+      model &&
+      webcamRef.current &&
+      webcamRef.current.video &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      const predictions: DetectedObject[] = await model.detect(
+        webcamRef.current.video
+      );
+
+      resizeCanvas(canvasRef, webcamRef);
+      drawOnCanvas(predictions, canvasRef.current?.getContext("2d"));
+
+      // let isPersonOrObject: boolean = false;
+      if (predictions.length > 0) {
+        // predictions.forEach((prediction) => {
+        //   isPersonOrObject = prediction.class === "person" ;
+        // });
+
+        if (autoRecordEnabled) {
+          startRecording(true);
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    interval = setInterval(() => {
+      runPrediction();
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [webcamRef.current, model, autoRecordEnabled, runPrediction]);
   return (
     <div className="flex h-screen">
       {/* Left division - webcam and Canvas  */}
