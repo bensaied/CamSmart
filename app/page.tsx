@@ -190,7 +190,6 @@ const HomePage = (props: Props) => {
           </div>
 
           {/* Middle section  */}
-
           <div className="flex flex-col gap-4">
             {videoFeedScan ? <Separator className="my-2" /> : ""}
             {videoFeedScan ? (
@@ -263,11 +262,13 @@ const HomePage = (props: Props) => {
             {videoFeedScan ? <Separator className="my-2" /> : ""}
           </div>
           {/* Bottom Secion  */}
-          <div className="flex flex-col gap-2"></div>
+          {/* <div className="flex flex-col gap-2"></div> */}
         </div>
-        {/* Features Guide Section  */}
+        {/* Features Guide VideoScan Section  */}
         {/* <div className="h-full flex-1 py-4 px-2 overflow-y-scroll"> */}
-        <div className={`h-full flex-1 py-4 px-2 overflow-y-scroll`}></div>
+        <div className={`h-full flex-1 py-4 px-2 overflow-y-scroll`}>
+          <RenderFeatureHighlightsSection />
+        </div>
       </div>
       {loading && (
         <div className="z-50 absolute w-full h-full flex items-center justify-center bg-primary-foreground">
