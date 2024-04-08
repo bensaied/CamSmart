@@ -1,14 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { Slider } from "@/components/ui/slider";
 import {
   Camera,
   MoonIcon,
@@ -19,8 +11,21 @@ import {
   ImageIcon,
   CctvIcon,
 } from "lucide-react";
-import Webcam from "react-webcam";
 import Image from "next/image";
+
+import Webcam from "react-webcam";
+import { Rings } from "react-loader-spinner";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { Separator } from "@/components/ui/separator";
+import { Slider } from "@/components/ui/slider";
+import { beep } from "@/utils/audio";
 
 import * as cocossd from "@tensorflow-models/coco-ssd";
 import "@tensorflow/tfjs-backend-cpu";
@@ -93,10 +98,75 @@ const HomePage = (props: Props) => {
     setModel(loadedModel);
   }
 
-  return <h1>CamSmart</h1>;
-};
+  return (
+    <div className="flex h-screen">
+      {/* Left division - webcam and Canvas  */}
+      <div className="relative w-3/4">
+        {/* Toggle visibility based on state */}
+        <div className="relative h-full w-full p-4">
+          <Webcam
+            ref={webcamRef}
+            // mirrored={mirrored}
+            className="h-full w-full object-cover"
+          />
+          <canvas
+            ref={canvasRef}
+            className="absolute top-0 left-0 h-full w-full object-contain"
+          ></canvas>
+        </div>
+      </div>
 
-// Functions resizeCanvas FormatData base64toBlob
+      {/* Righ division - container for buttion panel and wiki secion  */}
+      <div className="flex flex-row w-1/4">
+        <div className="border-primary/5 border-2 max-w-xs flex flex-col gap-2 justify-between shadow-md rounded-md p-4">
+          {/* top secion  */}
+          <div className="flex flex-col gap-2">
+            {videoFeedScan ? (
+              <Button
+                title="Switch to ImageScan"
+                variant={"outline"}
+                size={"icon"}
+                onClick={toggleRightDivisionVisibility}
+              >
+                <ImageIcon />
+              </Button>
+            ) : (
+              <Button
+                title="Switch to VideoScan"
+                variant={"outline"}
+                size={"icon"}
+                onClick={toggleRightDivisionVisibility}
+              >
+                <CctvIcon />
+              </Button>
+            )}
+            <ModeToggle />
+            <Separator className="my-2" />
+          </div>
+
+          {/* Middle section  */}
+
+          <div className="flex flex-col gap-4"></div>
+          {/* Bottom Secion  */}
+          <div className="flex flex-col gap-2"></div>
+        </div>
+        {/* Features Guide Section  */}
+        {/* <div className="h-full flex-1 py-4 px-2 overflow-y-scroll"> */}
+        <div className={`h-full flex-1 py-4 px-2 overflow-y-scroll`}></div>
+      </div>
+      {loading && (
+        <div className="z-50 absolute w-full h-full flex items-center justify-center bg-primary-foreground">
+          Getting things ready . . . <Rings height={50} color="red" />
+        </div>
+      )}
+    </div>
+  );
+
+  // Handler functions
+};
+export default HomePage;
+
+//  Functions resizeCanvas FormatData base64toBlob
 function resizeCanvas(
   canvasRef: React.RefObject<HTMLCanvasElement>,
   webcamRef: React.RefObject<Webcam>
@@ -133,6 +203,5 @@ function base64toBlob(base64Data: any) {
   for (let i = 0; i < byteCharacters.length; i++) {
     byteArray[i] = byteCharacters.charCodeAt(i);
   }
-
-  return new Blob([arrayBuffer], { type: "image/png" }); // Specify the image type here
+  return new Blob([arrayBuffer], { type: "image/png" });
 }
