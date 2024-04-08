@@ -25,6 +25,8 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
+import SocialMediaLinks from "@/components/social-links";
+
 import { beep } from "@/utils/audio";
 
 import * as cocossd from "@tensorflow-models/coco-ssd";
