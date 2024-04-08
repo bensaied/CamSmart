@@ -262,7 +262,7 @@ const HomePage = (props: Props) => {
             {videoFeedScan ? <Separator className="my-2" /> : ""}
           </div>
           {/* Bottom Secion  */}
-          {/* <div className="flex flex-col gap-2"></div> */}
+          <div className="flex flex-col gap-2"></div>
         </div>
         {/* Features Guide VideoScan Section  */}
         {/* <div className="h-full flex-1 py-4 px-2 overflow-y-scroll"> */}
@@ -302,7 +302,6 @@ const HomePage = (props: Props) => {
     if (!webcamRef.current) {
       toast("Camera is not found. Please refresh.");
     }
-
     if (mediaRecorderRef.current?.state == "recording") {
       // check if recording
       // then stop recording
@@ -349,7 +348,7 @@ const HomePage = (props: Props) => {
       <div className="text-xs text-muted-foreground flex flex-col items-center">
         <Image
           title="CamSmart"
-          alt="CamSmart logo"
+          alt="CamSmart Logo"
           src="/favicon.ico"
           width={100}
           height={100}
@@ -362,7 +361,9 @@ const HomePage = (props: Props) => {
               <strong className="text-sm text-blue-500">VideoScan</strong>
             </li>
             <li className="flex flex-col items-center">
-              <strong>Live Camera Feed Highlighting 🎨</strong>
+              <strong className="text-xs">
+                Live Camera Feed Highlighting 🎨
+              </strong>
               <p>
                 Highlights persons in{" "}
                 <span style={{ color: "#EE6310" }}>orange</span> and other
@@ -370,26 +371,28 @@ const HomePage = (props: Props) => {
               </p>
             </li>
             <Separator className="h-2" />
-            <li>
+            <li className="flex flex-col items-center">
               <strong>Dark Mode/Sys Theme 🌗</strong>
               <p>Toggle between dark mode and system theme.</p>
-              <Button
-                className="my-2 h-6 w-6"
-                variant={"outline"}
-                size={"icon"}
-                onClick={() => setTheme("light")}
-              >
-                <SunIcon size={14} />
-              </Button>{" "}
-              /{" "}
-              <Button
-                className="my-2 h-6 w-6"
-                variant={"outline"}
-                size={"icon"}
-                onClick={() => setTheme("dark")}
-              >
-                <MoonIcon size={14} />
-              </Button>
+              <div className="flex justify-center">
+                <Button
+                  className="my-2 h-6 w-6"
+                  variant={"outline"}
+                  size={"icon"}
+                  onClick={() => setTheme("light")}
+                >
+                  <SunIcon size={14} />
+                </Button>{" "}
+                <span className="my-2 mx-2"> / </span>
+                <Button
+                  className="my-2 h-6 w-6"
+                  variant={"outline"}
+                  size={"icon"}
+                  onClick={() => setTheme("dark")}
+                >
+                  <MoonIcon size={14} />
+                </Button>
+              </div>
             </li>
 
             <Separator />
