@@ -229,6 +229,148 @@ const HomePage = (props: Props) => {
       // show toast
     }
   }
+  // Inner-components for VideoScan Section
+  function RenderFeatureHighlightsSection() {
+    return (
+      <div className="text-xs text-muted-foreground flex flex-col items-center">
+        <Image
+          title="CamSmart"
+          alt="CamSmart logo"
+          src="/favicon.ico"
+          width={100}
+          height={100}
+        ></Image>
+        {videoFeedScan ? (
+          <ul className="space-y-4 ">
+            <Separator className="h-2" />
+
+            <li className="flex justify-center">
+              <strong className="text-sm text-blue-500">VideoScan</strong>
+            </li>
+            <li className="flex flex-col items-center">
+              <strong>Live Camera Feed Highlighting 🎨</strong>
+              <p>
+                Highlights persons in{" "}
+                <span style={{ color: "#EE6310" }}>orange</span> and other
+                objects in <span style={{ color: "#BCD96E" }}>green</span>.
+              </p>
+            </li>
+            <Separator className="h-2" />
+            <li>
+              <strong>Dark Mode/Sys Theme 🌗</strong>
+              <p>Toggle between dark mode and system theme.</p>
+              <Button
+                className="my-2 h-6 w-6"
+                variant={"outline"}
+                size={"icon"}
+                onClick={() => setTheme("light")}
+              >
+                <SunIcon size={14} />
+              </Button>{" "}
+              /{" "}
+              <Button
+                className="my-2 h-6 w-6"
+                variant={"outline"}
+                size={"icon"}
+                onClick={() => setTheme("dark")}
+              >
+                <MoonIcon size={14} />
+              </Button>
+            </li>
+
+            <Separator />
+            <li>
+              <strong>Take Pictures 📸</strong>
+              <p>Capture snapshots at any moment from the video feed.</p>
+              <Button
+                className="h-6 w-6 my-2"
+                variant={"outline"}
+                size={"icon"}
+                onClick={userPromptScreenshot}
+              >
+                <Camera size={14} />
+              </Button>
+            </li>
+            <li>
+              <strong>Manual Video Recording 📽️</strong>
+              <p>Manually record video clips as needed.</p>
+              <Button
+                className="h-6 w-6 my-2"
+                variant={isRecording ? "destructive" : "outline"}
+                size={"icon"}
+                onClick={userPromptRecord}
+              >
+                <Video size={14} />
+              </Button>
+            </li>
+            <li>
+              <strong>Enable/Disable Auto Record 🚫</strong>
+              <p>
+                Option to enable/disable automatic video recording whenever
+                required.
+              </p>
+              <Button
+                className="h-6 w-6 my-2"
+                variant={autoRecordEnabled ? "destructive" : "outline"}
+                size={"icon"}
+                onClick={toggleAutoRecord}
+              >
+                {autoRecordEnabled ? (
+                  <Rings color="white" height={30} />
+                ) : (
+                  <Disc2Icon size={14} />
+                )}
+              </Button>
+            </li>
+            <li>
+              <strong>Volume Slider 🔊</strong>
+              <p>Adjust the volume level of the notifications.</p>
+            </li>
+
+            <Separator />
+            <li className="space-y-4">
+              <strong>Share your thoughts 💬 </strong>
+              <SocialMediaLinks />
+              <br />
+              <br />
+              <br />
+            </li>
+          </ul>
+        ) : (
+          <ul className="space-y-4 ">
+            <Separator />
+
+            <li className="flex justify-center">
+              <strong>ImageScan</strong>
+            </li>
+
+            <li>
+              <strong>Dark Mode/Sys Theme 🌗</strong>
+              <p>Toggle between dark mode and system theme.</p>
+              <Button
+                className="my-2 h-6 w-6"
+                variant={"outline"}
+                size={"icon"}
+                onClick={() => setTheme("light")}
+              >
+                <SunIcon size={14} />
+              </Button>{" "}
+              /{" "}
+              <Button
+                className="my-2 h-6 w-6"
+                variant={"outline"}
+                size={"icon"}
+                onClick={() => setTheme("dark")}
+              >
+                <MoonIcon size={14} />
+              </Button>
+            </li>
+            <Separator />
+          </ul>
+        )}
+      </div>
+    );
+  }
 };
 export default HomePage;
 
