@@ -141,6 +141,8 @@ const HomePage = (props: Props) => {
 
     return () => clearInterval(interval);
   }, [webcamRef.current, model, autoRecordEnabled, runPrediction]);
+
+  // Return Logic of the HomePage
   return (
     <div className="flex h-screen">
       {/* Left division - webcam and Canvas  */}
@@ -162,7 +164,7 @@ const HomePage = (props: Props) => {
       {/* Righ division - container for buttion panel and wiki secion  */}
       <div className="flex flex-row w-1/4">
         <div className="border-primary/5 border-2 max-w-xs flex flex-col gap-2 justify-between shadow-md rounded-md p-4">
-          {/* top secion  */}
+          {/* Top secion  */}
           <div className="flex flex-col gap-2">
             {videoFeedScan ? (
               <Button
@@ -189,7 +191,77 @@ const HomePage = (props: Props) => {
 
           {/* Middle section  */}
 
-          <div className="flex flex-col gap-4"></div>
+          <div className="flex flex-col gap-4">
+            {videoFeedScan ? <Separator className="my-2" /> : ""}
+            {videoFeedScan ? (
+              <Button
+                title="Take a Picture"
+                variant={"outline"}
+                size={"icon"}
+                onClick={userPromptScreenshot}
+              >
+                <Camera />
+              </Button>
+            ) : (
+              ""
+            )}{" "}
+            {videoFeedScan ? (
+              <Button
+                title="Manual Video Recording"
+                variant={isRecording ? "destructive" : "outline"}
+                size={"icon"}
+                onClick={userPromptRecord}
+              >
+                <Video />
+              </Button>
+            ) : (
+              ""
+            )}
+            {videoFeedScan ? (
+              <Button
+                title="Enable/Disable Auto Record"
+                variant={autoRecordEnabled ? "destructive" : "outline"}
+                size={"icon"}
+                onClick={toggleAutoRecord}
+              >
+                {autoRecordEnabled ? (
+                  <Rings color="white" height={45} />
+                ) : (
+                  <Disc2Icon />
+                )}
+              </Button>
+            ) : (
+              ""
+            )}
+            {videoFeedScan ? (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    title="Volume of the notifications"
+                    variant={"outline"}
+                    size={"icon"}
+                  >
+                    <Volume2 />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <Slider
+                    max={1}
+                    min={0}
+                    step={0.2}
+                    defaultValue={[volume]}
+                    onValueCommit={(val) => {
+                      setVolume(val[0]);
+                      beep(val[0]);
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+            ) : (
+              ""
+            )}
+            {videoFeedScan ? <Separator className="my-2" /> : ""}
+          </div>
           {/* Bottom Secion  */}
           <div className="flex flex-col gap-2"></div>
         </div>
