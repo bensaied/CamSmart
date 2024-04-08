@@ -165,7 +165,7 @@ const HomePage = (props: Props) => {
   );
 
   // Handler functions
-
+  // Screenshots Function
   function userPromptScreenshot() {
     // take picture
     if (!webcamRef.current) {
@@ -182,6 +182,39 @@ const HomePage = (props: Props) => {
       a.click();
     }
     // Save it to downloads
+  }
+  // Recording Functions
+  function userPromptRecord() {
+    if (!webcamRef.current) {
+      toast("Camera is not found. Please refresh.");
+    }
+
+    if (mediaRecorderRef.current?.state == "recording") {
+      // check if recording
+      // then stop recording
+      // and save to downloads
+      mediaRecorderRef.current.requestData();
+      clearTimeout(stopTimeout);
+      mediaRecorderRef.current.stop();
+      toast("Recording saved to downloads");
+    } else {
+      // if not recording
+      // start recording
+      startRecording(false);
+    }
+  }
+  function startRecording(doBeep: boolean) {
+    if (webcamRef.current && mediaRecorderRef.current?.state !== "recording") {
+      mediaRecorderRef.current?.start();
+      doBeep && beep(volume);
+
+      stopTimeout = setTimeout(() => {
+        if (mediaRecorderRef.current?.state === "recording") {
+          mediaRecorderRef.current.requestData();
+          mediaRecorderRef.current.stop();
+        }
+      }, 30000);
+    }
   }
 };
 export default HomePage;
