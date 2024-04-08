@@ -358,7 +358,7 @@ const HomePage = (props: Props) => {
             <Separator className="h-2" />
 
             <li className="flex justify-center">
-              <strong className="text-sm text-blue-500">VideoScan</strong>
+              <strong className="text-sm text-blue-700">VideoScan</strong>
             </li>
             <li className="flex flex-col items-center">
               <strong className="text-xs">
@@ -455,32 +455,38 @@ const HomePage = (props: Props) => {
           </ul>
         ) : (
           <ul className="space-y-4 ">
-            <Separator />
+            <Separator className="h-2" />
 
             <li className="flex justify-center">
-              <strong>ImageScan</strong>
+              <strong className="text-sm text-purple-300">ImageScan</strong>
             </li>
-
-            <li>
+            <li className="flex flex-col items-center">
+              <strong className="text-xs">Image object Detection</strong>
+              <p>Upload an image and get a report about its objects.</p>
+            </li>
+            <Separator className="h-2" />
+            <li className="flex flex-col items-center">
               <strong>Dark Mode/Sys Theme 🌗</strong>
               <p>Toggle between dark mode and system theme.</p>
-              <Button
-                className="my-2 h-6 w-6"
-                variant={"outline"}
-                size={"icon"}
-                onClick={() => setTheme("light")}
-              >
-                <SunIcon size={14} />
-              </Button>{" "}
-              /{" "}
-              <Button
-                className="my-2 h-6 w-6"
-                variant={"outline"}
-                size={"icon"}
-                onClick={() => setTheme("dark")}
-              >
-                <MoonIcon size={14} />
-              </Button>
+              <div className="flex justify-center">
+                <Button
+                  className="my-2 h-6 w-6"
+                  variant={"outline"}
+                  size={"icon"}
+                  onClick={() => setTheme("light")}
+                >
+                  <SunIcon size={14} />
+                </Button>{" "}
+                <span className="my-2 mx-2"> / </span>
+                <Button
+                  className="my-2 h-6 w-6"
+                  variant={"outline"}
+                  size={"icon"}
+                  onClick={() => setTheme("dark")}
+                >
+                  <MoonIcon size={14} />
+                </Button>
+              </div>
             </li>
             <Separator />
           </ul>
