@@ -46,6 +46,52 @@ const HomePage = (props: Props) => {
   const [model, setModel] = useState<ObjectDetection>();
   const [loading, setLoading] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const [videoFeedScan, setvideoFeedScan] = useState(true);
+  const toggleRightDivisionVisibility = () => {
+    setvideoFeedScan(!videoFeedScan);
+  };
+
+  // Initialize the media recorder
+  useEffect(() => {
+    if (webcamRef && webcamRef.current) {
+      const stream = (webcamRef.current.video as any).captureStream();
+      if (stream) {
+        mediaRecorderRef.current = new MediaRecorder(stream);
+
+        mediaRecorderRef.current.ondataavailable = (e) => {
+          if (e.data.size > 0) {
+            const recordedBlob = new Blob([e.data], { type: "video" });
+            const videoURL = URL.createObjectURL(recordedBlob);
+
+            const a = document.createElement("a");
+            a.href = videoURL;
+            a.download = `${formatDate(new Date())}.webm`;
+            a.click();
+          }
+        };
+        mediaRecorderRef.current.onstart = (e) => {
+          setIsRecording(true);
+        };
+        mediaRecorderRef.current.onstop = (e) => {
+          setIsRecording(false);
+        };
+      }
+    }
+  }, [webcamRef]);
+
+  useEffect(() => {
+    setLoading(true);
+    initModel();
+  }, []);
+
+  // Load model
+  // Set it in a state varaible
+  async function initModel() {
+    const loadedModel: ObjectDetection = await cocossd.load({
+      base: "mobilenet_v2",
+    });
+    setModel(loadedModel);
+  }
 
   return <h1>CamSmart</h1>;
 };
