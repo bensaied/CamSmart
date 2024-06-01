@@ -354,7 +354,10 @@ const HomePage = (props: Props) => {
           height={100}
         ></Image>
         {videoFeedScan ? (
-          <ul className="space-y-4 ">
+          <ul
+            className="space-y-4
+           "
+          >
             <Separator className="h-2" />
 
             <li className="flex justify-center">
@@ -454,15 +457,20 @@ const HomePage = (props: Props) => {
             </li>
           </ul>
         ) : (
-          <ul className="space-y-4 ">
+          <ul className="space-y-4">
             <Separator className="h-2" />
-
             <li className="flex justify-center">
               <strong className="text-sm text-purple-300">ImageScan</strong>
             </li>
             <li className="flex flex-col items-center">
-              <strong className="text-xs">Image object Detection</strong>
-              <p>Upload an image and get a report about its objects.</p>
+              <strong className="text-xs">
+                Image Analysis and Object Detection 🃏{" "}
+              </strong>
+              <p>
+                Upload an image to receive a detailed{" "}
+                <span style={{ color: "#ffdd00" }}>report</span> on detected
+                objects.
+              </p>
             </li>
             <Separator className="h-2" />
             <li className="flex flex-col items-center">
@@ -489,6 +497,13 @@ const HomePage = (props: Props) => {
               </div>
             </li>
             <Separator />
+            <li className="space-y-4">
+              <strong>Share your thoughts 💬 </strong>
+              <SocialMediaLinks />
+              <br />
+              <br />
+              <br />
+            </li>
           </ul>
         )}
       </div>
