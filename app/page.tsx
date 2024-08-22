@@ -11,13 +11,20 @@ import {
   ImageIcon,
   CctvIcon,
   ImageUp,
+  Loader2,
+  ScanSearch,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { cn } from "@/lib/utils";
 
 import Webcam from "react-webcam";
 import { Rings } from "react-loader-spinner";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+
 import {
   Popover,
   PopoverContent,
@@ -47,7 +54,7 @@ const HomePage = (props: Props) => {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // States
+  // States For VideoScan
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [autoRecordEnabled, setAutoRecordEnabled] = useState<boolean>(false);
   const [volume, setVolume] = useState(0.8);
@@ -58,6 +65,9 @@ const HomePage = (props: Props) => {
   const toggleRightDivisionVisibility = () => {
     setvideoFeedScan(!videoFeedScan);
   };
+  // States For ImageScan
+  const [url, seturl] = useState("");
+  const [label, setlabel] = useState("");
 
   // Initialize the media recorder
   useEffect(() => {
@@ -513,7 +523,35 @@ const HomePage = (props: Props) => {
               </Button>
             </li>
             <Separator />
-
+            <form onSubmit={uploadFiles} className="flex gap-2 items-center">
+              <ImageIcon />
+              <Input name="files" type="file"></Input>
+              {/* <Button disabled={loading} type="submit">
+                {loading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <ScanSearch size={20} />
+                )}
+              </Button> */}
+            </form>
+            {url && (
+              <>
+                <Image
+                  src={url}
+                  width={400}
+                  height={400}
+                  alt={"uploaded image"}
+                ></Image>
+                <Link
+                  href={url}
+                  className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    "text-xs text-muted-foreground"
+                  )}
+                ></Link>
+              </>
+            )}
+            {label && <p className="font-bold text-l">Detected: {label}</p>}
             <li className="space-y-4">
               <strong>Share your thoughts 💬 </strong>
               <SocialMediaLinks />
@@ -525,6 +563,18 @@ const HomePage = (props: Props) => {
         )}
       </div>
     );
+  }
+  // Handle Function for uploading image
+  async function uploadFiles(event: any) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    setLoading(true);
+    const response = await axios.post("/api/detect-objects", formData);
+
+    setLoading(false);
+    // TODO: set state variables for url and label
+    seturl(response.data.url);
+    setlabel(response.data.label);
   }
 };
 export default HomePage;
