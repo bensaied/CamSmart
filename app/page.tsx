@@ -10,6 +10,7 @@ import {
   Volume2,
   ImageIcon,
   CctvIcon,
+  ImageUp,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -497,6 +498,22 @@ const HomePage = (props: Props) => {
               </div>
             </li>
             <Separator />
+            <li>
+              <strong>Upload Image 🖼️</strong>
+              <p>
+                Upload an image to receive a report of the detected objects.
+              </p>
+              <Button
+                className="h-6 w-6 my-2"
+                variant={"outline"}
+                size={"icon"}
+                // onClick={}
+              >
+                <ImageUp size={14} />
+              </Button>
+            </li>
+            <Separator />
+
             <li className="space-y-4">
               <strong>Share your thoughts 💬 </strong>
               <SocialMediaLinks />
