@@ -13,7 +13,7 @@ const SocialMediaLinks = () => {
         <FontAwesomeIcon icon={faGithub} size="2x" />
       </a>
       <a
-        href="https://www.linkedin.com/in/oussama-ben-saayeed/"
+        href="https://www.linkedin.com/in/bensaied/"
         target="_blank"
         rel="noopener noreferrer"
       >
