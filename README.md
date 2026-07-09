@@ -1,5 +1,5 @@
 # CamSmart
-.
+
 CamSmart is a Next.js web application that provides real-time object detection and tracking in live video feeds, as well as detailed analysis of uploaded images.
 
 ![Logo](https://i.ibb.co/dgN0Nv3/favicon.png)
